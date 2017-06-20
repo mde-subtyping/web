@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm.concepts:StateMachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sm.concepts="subtyping.sm" name="SM" initial="//@nodes.0">
+  <nodes name="a"/>
+  <nodes name="b"/>
+  <edges name="a->b" source="//@nodes.0" target="//@nodes.1" isCompletion="false">
+    <event name="a->b"/>
+  </edges>
+</sm.concepts:StateMachine>

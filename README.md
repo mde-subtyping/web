@@ -54,3 +54,61 @@ In addition, if we consider non-deterministic state machines by removing the OCL
 
 <img src="images/counterexample.png" height="250">
 
+
+
+## Reuse of Model Management Operations
+
+In this section, we are going to show how to reuse a model management operation - in this case, a model-to-text transformation with ATL - for a refinement version of the state machine metamodel. 
+
+[Initial state machine metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/models/sm.emf) (**version 1**):
+
+<img src="images/mm_sm.png" height="300">
+
+We have developed an [ATL transformation](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/trafo/sm.atl) that serializes a state machine conforming to the previous metamodel into the [format proposed by Martin Fowler](http://www.informit.com/articles/article.aspx?p=1592379&seqNum=3). This operation maps the state machine:
+
+<img src="images/model_initial.png" height="250">
+
+into
+
+	events
+	  a->b
+	end
+	
+	state a
+	  a->b => b
+	end
+	
+	state b
+	end
+
+In a refinement of our DSL for state machines, we add an event as an explicit entity, produding a [new metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/extended/smEvent.emf) (**version 2**):
+
+<img src="images/mm_sm.png" height="300">
+
+with the following constraint, ensuring the consistency of event names:
+
+	context Transition
+	inv event_consistency:
+	not(self.event.oclIsUndefined) implies self.name=self.event.name
+
+For which we can define state machines as follows:
+
+<img src="images/model_smEvent.png" height="250">
+
+The questions that we address next are:
+* Can we reuse the model operation for compiling state machines that conform to **version 2** of the metamodel (as the one depicted above)? 
+* If so, how can we do it?
+
+Our subtyping operation assists us in determining that the **version 2** of the metamodel together with the OCL constraint is a refinement of **version 1** as shown [in this test case](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/ModelTypeUtils_reuse_tests.groovy). 
+
+The subtyping operation also synthesizes the [extended metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/extended/extension.ecore), depicted in class diagram notation below:
+
+<img src="images/mm_extension.png" height="375">
+
+That can be used to rewrite the signature of the model management operation. In addition, as the subtyping operation had to apply some automatic renamings in order to avoid name clashes, we have to adapt the original model that conforms to **version 2** to the extension metamodel as shown in [this test case (testRetype_smEvent_asExtended)](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/ModelTypeUtils_reuse_tests.groovy). This operation retypes the objects in the original model according to the renamings inferred by the subtyping operation: 
+
+<img src="images/model_renamed.png" height="250">
+
+This model can be processed by the ATL transformation, after replacing the original metamodel with the synthesized extension metamodel. Note that the adaptation of the model is only mandatory when the set of class names in version 1 and the set of class names in version 2 are not disjoint. 
+
+In case the renamings applied to the subtype metamodel in the extension model make the object type names different from those in the original subtype metamodel, the tool facilitates an adaptation from the extended metamodel to the original metamodel as shown in [the test case (testRetype_smEvent_asOriginal)](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/ModelTypeUtils_reuse_tests.groovy). 
