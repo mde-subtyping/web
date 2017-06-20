@@ -1,0 +1,161 @@
+fmod FMA-MAP{X :: TRIV, Y :: TRIV} is
+  ex MAP{X,Y} .
+  
+  op _\_ : Map{X,Y} Map{X,Y} -> Map{X,Y} .
+  eq (E:Entry{X,Y}, M1:Map{X,Y}) \ (E:Entry{X,Y}, M2:Map{X,Y}) = M1:Map{X,Y} \ M2:Map{X,Y} . 
+  eq M1:Map{X,Y} \ M2:Map{X,Y} = M1:Map{X,Y} [owise] . 
+
+endfm
+
+
+view Float from TRIV to OCL-FLOAT is
+  sort Elt to Float .
+endv 
+
+view Nat from TRIV to OCL-NAT is
+  sort Elt to Nat .
+endv 
+
+view Rat from TRIV to OCL-RAT is
+  sort Elt to Rat .
+endv 
+
+view String from TRIV to OCL-STRING is
+  sort Elt to String .
+endv 
+
+fmod IMAP{X :: TRIV} is
+  pr FMA-MAP{Rat,X} .
+  
+  vars I I1 I2 I' : Int .
+  vars IS IS1 IS2 : Map{Rat,X} .
+  var Obj : X$Elt .
+  
+  op sentinel : -> X$Elt .
+endfm 
+
+mod FMA-CONFIGURATION is 
+  inc CONFIGURATION  .
+endm
+
+view Oid from TRIV to FMA-CONFIGURATION is
+  sort Elt to Oid .
+endv
+
+view Object from TRIV to FMA-CONFIGURATION is
+  sort Elt to Object .
+endv
+
+mod PRE-MODEL-OCL is
+  pr OCL-TYPE  .
+  pr IMAP{Object} * (
+  	sort Map{Rat,Object} to IObjectSet, 
+  	sort Entry{Rat,Object} to IObject, 
+  	op undefined to undefIObject,
+  	op _`,_ : Map{Rat,Object} Map{Rat,Object} -> Map{Rat,Object} to __ 
+  ) . 
+  pr IMAP{Oid} * (
+  	sort Map{Rat,Oid} to IOidSet, 
+  	sort Entry{Rat,Oid} to IOid, 
+  	op undefined to undefIOid,
+  	op _`,_ : Map{Rat,Oid} Map{Rat,Oid} -> Map{Rat,Oid} to __ 
+  ) .
+
+  var O O' O1 O2 : Oid .
+  var iO : IOid . --- indexed object id
+  var C C1 C2 : QualifiedCid .
+  var PS : PropSet .
+  var P P1 P2 : PropName .
+  vars iOS iOS1 iOS2 : IObjectSet .
+  vars IS IS1 IS2 : IOidSet .
+  vars Obj : Object .
+  var V : ValueExpr .
+  vars I I1 I2 : Int .
+  var S : String .
+  var B : Bool . 
+  
+  sort FmaTerm .
+  op term : IObjectSet -> FmaTerm . 
+  op term : IOidSet -> FmaTerm . 
+  op term : ValueExpr -> FmaTerm . 
+  
+  --- cid
+  op cid : String -> Cid [ctor] .
+  
+  --- oid 
+  op oid : QualifiedCid BasicType -> Oid [ctor] . 
+
+  op getCid : Oid -> QualifiedCid .
+  eq getCid(oid(C,I)) = C .
+  eq getCid(oid(C,S)) = C .
+   
+  --- properties
+  sorts PropName Property PropSet .
+  subsort Property < PropSet .
+  op prop : String -> PropName .
+
+  --- values
+  sort ValueExpr .
+  op val : BasicType -> ValueExpr .
+
+  op default : ValueExpr -> ValueExpr .
+  eq default( val(I) ) = val(0) .
+  eq default( val(S) ) = val("") .
+  eq default( val(B) ) = val(false) .
+
+  --- enumerations
+  op val : Enum -> ValueExpr .
+  op literal : String -> Enum [ctor] .
+
+  --- properties
+  op _=_ : PropName ValueExpr -> Property [ctor prec 20 format(i d d d)] .
+  
+  op val : Oid -> ValueExpr .
+  op ref : IOidSet -> ValueExpr [ctor] .
+  op val : IObjectSet -> ValueExpr [ctor] .  
+
+  op noProp : -> PropSet  [ctor] .
+  op _,_ : PropSet PropSet -> PropSet 
+            [ctor assoc comm id: noProp gather (e E) prec 21 format(d d n i)] .
+  eq P:Property, P:Property = P:Property .
+  
+  op _in_ : PropName PropSet -> Bool .
+  eq P in (P = V, PS) = true .
+  eq P in (PS) = false [owise] .
+  
+  --- objects 
+  op {_} : PropSet -> Object [ctor object prec 18]. 
+
+  --- ----------------------------------------------------------
+  sort ModelTypeName .
+  op metamodel : String -> ModelTypeName [ctor].
+  
+  sorts QualifiedCid .
+  
+  op noCid : -> QualifiedCid . 
+  eq noCid = metamodel("") ! cid("") .
+  
+  op _!_ : ModelTypeName Cid -> QualifiedCid [ctor] .
+  op getCid : QualifiedCid -> Cid .
+  eq getCid( M:ModelTypeName ! C:Cid ) = C:Cid .
+  op getMetamodelName : QualifiedCid -> ModelTypeName .
+  eq getMetamodelName( M:ModelTypeName ! C:Cid ) = M:ModelTypeName .
+  
+  subsort QualifiedCid < Cid .
+ 
+  op default : QualifiedCid -> [PropSet] .
+  sort FieldSet RecordType UnionType .
+  
+  sort EnumCid QualifiedEnumCid .
+  op enum : String -> EnumCid .
+  op _!_ : ModelTypeName EnumCid -> QualifiedEnumCid [ctor] .
+
+  op cl : QualifiedCid -> FieldSet . 
+  op enum : QualifiedEnumCid -> [UnionType] .
+
+  op r : ModelTypeName -> QualifiedCid .
+
+
+
+endm
+
