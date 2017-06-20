@@ -1,4 +1,4 @@
-@namespace(uri="fma.metamodel.graph", prefix="graph")
+@namespace(uri="metamodel.graph", prefix="graph")
 package graph;
 
 class Graph {
