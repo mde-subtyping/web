@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm.concepts:StateMachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sm.concepts="fma.subtyping.sm" xsi:schemaLocation="fma.subtyping.sm /fma.metamodel.subtyping/src/test/resources/emf/model/type/sm/smEvent.ecore" name="SM" initial="//@nodes.0">
+  <nodes name="a"/>
+  <nodes name="b"/>
+  <edges name="a->b" source="//@nodes.0" target="//@nodes.1">
+    <event name="a->b"/>
+  </edges>
+</sm.concepts:StateMachine>

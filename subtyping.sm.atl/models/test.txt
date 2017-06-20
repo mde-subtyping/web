@@ -1,0 +1,11 @@
+events
+  a->b
+end
+
+state a
+  a->b => b
+end
+
+state b
+end
+

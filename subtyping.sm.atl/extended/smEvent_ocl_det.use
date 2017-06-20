@@ -1,0 +1,25 @@
+context Transition
+inv smEvent_determinism:
+not(Transition.allInstances()->exists(t | 
+	t.source=self.source
+	and
+	t.target<>self.target 
+))
+
+context Transition
+inv eventTransition:
+name<>'' implies isCompletion=false
+
+context Transition
+inv event_consistency:
+not(self.event.oclIsUndefined()) implies self.name=self.event.name
+
+context State
+inv smEvent_stateContainment:
+StateMachine.allInstances()->exists(sm | sm.nodes->includes(self))
+
+context Transition
+inv smEvent_transitionContainment:
+StateMachine.allInstances()->exists(sm | sm.edges->includes(self))
+
+

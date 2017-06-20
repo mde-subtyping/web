@@ -1,0 +1,23 @@
+-- @path sm=/subtyping.sm.atl/models/sm.ecore
+query SM2Text = sm!StateMachine.allInstances()
+		->asSequence()
+		->first().compile().writeTo('subtyping.sm.atl/models/test.txt');
+
+helper context sm!StateMachine def: compile() : String =
+	'events\n' +
+	self.edges->iterate(e; acc : String = '' | acc + '  ' + e.name + '\n') +
+	'end\n\n' +
+	self.nodes->iterate(n; acc : String = '' | acc + n.compile() );
+	
+helper context sm!State def: compile() : String =
+	'state ' + self.name + '\n' +
+	sm!StateMachine.allInstances()->first().edges->iterate(e; acc : String ='' |
+		if (e.source.name=self.name) then
+			'  ' + e.name + ' => ' + e.target.name + '\n'
+		else 
+			''
+		endif
+	) +
+	'end\n\n';
+	
+	
