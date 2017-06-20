@@ -2,7 +2,7 @@
 
 ## Configuration
 
-To use the tool, download the [test Gradle project](https://github.com/mde-subtyping/web/tree/master/subtyping.tests/src/test). The usual structure of a test exercising the subtyping operation is as follows:
+To use the tool, download the [test Gradle project](https://github.com/mde-subtyping/web/tree/master/subtyping.tests). The usual structure of a test exercising the subtyping operation is as follows:
 
 * Load the configuration properties for the solver (an example can be found [here](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/emf/model/type/sm/subtyping.properties)) indicating where Maude and the bounds to be used by the model finder:
 
