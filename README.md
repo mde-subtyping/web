@@ -12,26 +12,26 @@ To use the tool, download the [test Gradle project](https://github.com/mde-subty
 
 * Load the configuration properties for the solver (an example can be found [here](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/emf/model/type/sm/subtyping.properties)) indicating where Maude and the bounds to be used by the model finder:
 
-	SolverProperties.loadPropertiesFile(propFilePath)
+		SolverProperties.loadPropertiesFile(propFilePath)
 	
 * Create an instance of the tool and configure it:
 
-	def ModelTypeUtils tool = new ModelTypeUtils()
-	// whether the software artifacts involved in solution (reuse metamodel, complement metamodels, etc) are to be persisted
-	tool.persistent=true
-	// folder where software artifacts will be stored 
-	tool.outputPath="src/test/resources/emf/model/type/sm/generated/"
-	// whether to use multiple subtyping or strict subtyping
-	tool.multipleInheritance = false
+		def ModelTypeUtils tool = new ModelTypeUtils()
+		// whether the software artifacts involved in solution (reuse metamodel, complement metamodels, etc) are to be persisted
+		tool.persistent=true
+		// folder where software artifacts will be stored 
+		tool.outputPath="src/test/resources/emf/model/type/sm/generated/"
+		// whether to use multiple subtyping or strict subtyping
+		tool.multipleInheritance = false
 	
 * Invoke the tool by providing the metamodel specifications:
 
-	tool.isOclConstrainedSubtypeOf(
-		sMMPath, // path to subtype EMF metamodel (.ecore)
-		sOcl, 	 // string containing OCL constraints for the metamodel above
-		tMMPath, // path to supertype EMF metamodel (.ecore)
-		tOcl	 // string containing OCL constraints for the metamodel above
-	)
+		tool.isOclConstrainedSubtypeOf(
+			sMMPath, // path to subtype EMF metamodel (.ecore)
+			sOcl, 	 // string containing OCL constraints for the metamodel above
+			tMMPath, // path to supertype EMF metamodel (.ecore)
+			tOcl	 // string containing OCL constraints for the metamodel above
+		)
 	
 The tool will determine whether `(sMMPath,sOcl)` denotes a model subtype of the model type denoted by `(tMMPath,tOcl)`. This use case is illustrated below, in Section **Subtyping**. Note that any of the sets of OCL constraints may be empty (with the empty string `""`).
 
