@@ -126,4 +126,4 @@ Our tool reuses (adapting and extending) the following third-party tools as libr
 
 * [TOTEM-MDE](https://github.com/totem-mde/totem): for integrating USE validator within EMF.
 * [USE validator](https://sourceforge.net/projects/useocl/) to reason about OCL constraints.
-* Maude4J: An Eclipse-indenpendent version of [MaudeDevelopmentTools](http://mdt.sourceforge.net/) for integrating Maude with Java.
+* Maude4J: An Eclipse-indenpendent version of [Maude Development Tools](http://mdt.sourceforge.net/) for integrating Maude with Java.
