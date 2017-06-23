@@ -118,3 +118,11 @@ That can be used to rewrite the signature of the model management operation. In 
 This model can be processed by the ATL transformation, after replacing the original metamodel with the synthesized extension metamodel. Note that the adaptation of the model is only mandatory when the set of class names in version 1 and the set of class names in version 2 are not disjoint. 
 
 In case the renamings applied to the subtype metamodel in the extension model make the object type names different from those in the original subtype metamodel, the tool facilitates an adaptation from the extended metamodel to the original metamodel as shown in [the test case (testRetype_smEvent_asOriginal)](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/ModelTypeUtils_reuse_tests.groovy). 
+
+
+## Credits
+
+Our tool reuses (adapting and extending) the following third-party tools as libraries:
+* [[https://github.com/totem-mde/totem|TOTEM-MDE]]: for integrating USE validator within EMF.
+* [[https://sourceforge.net/projects/useocl/|USE validator]] to reason about OCL constraints.
+* Maude4J: An Eclipse-indenpendent version of [[http://mdt.sourceforge.net/|MaudeDevelopmentTools]] for integrating Maude with Java.
