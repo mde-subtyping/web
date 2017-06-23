@@ -124,6 +124,6 @@ In case the renamings applied to the subtype metamodel in the extension model ma
 
 Our tool reuses (adapting and extending) the following third-party tools as libraries:
 
-* [[https://github.com/totem-mde/totem|TOTEM-MDE]]: for integrating USE validator within EMF.
-* [[https://sourceforge.net/projects/useocl/|USE validator]] to reason about OCL constraints.
-* Maude4J: An Eclipse-indenpendent version of [[http://mdt.sourceforge.net/|MaudeDevelopmentTools]] for integrating Maude with Java.
+* [https://github.com/totem-mde/totem](TOTEM-MDE): for integrating USE validator within EMF.
+* [https://sourceforge.net/projects/useocl/](USE validator) to reason about OCL constraints.
+* Maude4J: An Eclipse-indenpendent version of [http://mdt.sourceforge.net/](MaudeDevelopmentTools) for integrating Maude with Java.
