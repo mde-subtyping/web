@@ -15,24 +15,41 @@ mod FMA-TYPE-SYNTAX is
   vars P P2 : PropName .
   var F : Field .
   var BT : BaseTypeName .
+  var DT DT1 DT2 : DataTypeName .
   vars R R1 R2 : FieldSet . 
   vars SIGMA SIGMA1 SIGMA2 : RecordType .
-  vars C C1 C2 : QualifiedCid .
+  vars C C1 C2 : ObjectTypeName .
+  var CT CT1 CT2 : CollectionTypeName .
   vars BT1 BT2 : BaseTypeName .
   var ALPHA ALPHA1 ALPHA2 : Scalar .
   var TAU TAU1 TAU2 : FmaType .
   var MTN1 MTN2 : ModelTypeName .
   var SC1 SC2 : Cid .
   vars QC1 QC2 : QualifiedCid .
-  vars QE1 QE2 : QualifiedEnumCid .
+  vars E QE1 QE2 : EnumTypeName .
   var ES1 ES2 : UnionType .
-  var N : Nat .
+  var N : Int .
   var M : Int .
   var OP OP1 OP2 : OpPropName .
+  var CM : CollectionModifier .
+  
 
+  
+  sort BaseTypeName Scalar .
+  ops DSL#Bool DSL#Int DSL#Float DSL#String : -> BaseTypeName .
+  
+  sort Void .
+  op void : -> Void [ctor] . 
 
-  sorts FmaType StmtUnit ActUnit .
-  subsorts Scalar UnionType RecordType StmtUnit ActUnit < FmaType .
+  sorts FmaType UnitType .
+  subsorts Scalar RecordType < FmaType .
+  subsort UnionType < RecordType .
+
+  subsort ModelTypeName < Scalar .      
+  sort DataTypeName .
+  subsort BaseTypeName EnumTypeName < DataTypeName .
+  subsort Void UnitType CollectionTypeName < Scalar .
+  
 
   sort Field .
   subsort Field < FieldSet . 
@@ -40,16 +57,11 @@ mod FMA-TYPE-SYNTAX is
   op __ : FieldSet FieldSet -> FieldSet [ctor assoc comm id: noField] .
   op noField : -> FieldSet [ctor] .
 
-    
-  subsort ModelTypeName < Scalar .      
-  sort DataTypeName .
-  subsort BaseTypeName QualifiedEnumCid < DataTypeName .
-  subsort Void DataTypeName CollectionTypeName < Scalar .
-
+  ops UndefCid AnyCid : -> QualifiedCid . 
 
   sort ObjectRefTypeName .
-  subsort ObjectTypeName ObjectRefTypeName < CollectionTypeName .   
-  op ref : QualifiedCid -> ObjectRefTypeName [ctor] .
+  subsort DataTypeName ObjectTypeName ObjectRefTypeName < CollectionTypeName .   
+  op ref : ObjectTypeName -> ObjectRefTypeName [ctor] .
 
   sort ObjectTypeName .
   subsort QualifiedCid < ObjectTypeName .
@@ -59,10 +71,8 @@ mod FMA-TYPE-SYNTAX is
   --- UNION TYPE
   op [_] : FieldSet -> UnionType .  
   
-
   sort CollectionTypeName CollectionModifier .
-  op _!_[_.._]{_}_ : ModelTypeName Cid Nat Int CollectionModifier OpPropName -> CollectionTypeName [ctor] .
-  op ref_!_[_.._]{_}_ : ModelTypeName Cid Nat Int CollectionModifier OpPropName -> CollectionTypeName [ctor] . 
+  op _[_.._]{_}_ : CollectionTypeName Int Int CollectionModifier OpPropName -> CollectionTypeName [ctor ] . 
 
   sort OpPropName .
   op bi : PropName -> OpPropName [ctor] .
@@ -70,41 +80,144 @@ mod FMA-TYPE-SYNTAX is
 
   ops set ordered bag seq : -> CollectionModifier [ctor] .
 
-  eq (P :t (MTN:ModelTypeName ! C:Cid)) = P :t MTN:ModelTypeName ! C:Cid [0 .. -1] { ordered } uni .
-  eq (P :t ref((MTN:ModelTypeName ! C:Cid))) = P :t ref MTN:ModelTypeName ! C:Cid [0 .. -1] { ordered } uni .
+  eq (P :t DT) = P :t DT [0 .. -1] { ordered } uni .
+  eq (P :t C) = P :t C [0 .. -1] { ordered } uni .
+  eq (P :t ref(C)) = P :t ref(C) [0 .. -1] { ordered } uni .
 
 
-  op _!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t MTN:ModelTypeName ! C:Cid [N .. M] { bag } OP .
-  op unique_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t unique MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t MTN:ModelTypeName ! C:Cid [N .. M] { set } OP .
-  op ordered_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t ordered MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t MTN:ModelTypeName ! C:Cid [N .. M] { seq } OP .
-  op unique`ordered_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t unique ordered MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t MTN:ModelTypeName ! C:Cid [N .. M] { ordered } OP .
-  
-  op ref_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t ref MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t ref MTN:ModelTypeName ! C:Cid [N .. M] { bag } OP .
-  op ref`unique_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t ref unique MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t ref MTN:ModelTypeName ! C:Cid [N .. M] { set } OP .
-  op ref`ordered_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t ref ordered MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t ref MTN:ModelTypeName ! C:Cid [N .. M] { seq } OP .
-  op ref`unique`ordered_!_[_.._]_ : ModelTypeName Cid Nat Int OpPropName -> CollectionTypeName [ctor] .
-  eq P :t ref unique ordered MTN:ModelTypeName ! C:Cid [N .. M] OP = P :t ref MTN:ModelTypeName ! C:Cid [N .. M] { ordered } OP .
-  
+  op type : Field -> Scalar .
+  eq type( P :t S:Scalar ) = S:Scalar .
+  op type : ObjectTypeName PropName -> [Scalar] .
+  eq type(C,P) = type(project(P, cl(C))) .
 
-  op NoRecord : -> FieldSet [ctor] . --- most informative object cl
-  ops UndefCid AnyCid : -> QualifiedCid . 
-  eq cl(AnyCid) = noField . --- top
-  eq cl(UndefCid) = NoRecord . --- bottom
-  
-  
   op project : PropName FieldSet ~> Field .
   eq project( P, (P :t ALPHA) R ) = P :t ALPHA .
   
   op hasField : Field FieldSet -> Bool .
   eq hasField( P :t ALPHA1, (P :t ALPHA2) R ) = true .
   eq hasField( F, R ) = false [owise] .
+
+
+  op typeName : Field -> [CollectionTypeName] .
+  eq typeName( P :t DT [N:Int .. M:Int] { CM } uni ) = DT .
+  eq typeName( P :t C [N:Int .. M:Int] { CM } OP ) = C .
+  eq typeName( P :t ref(C) [N:Int .. M:Int] { CM } OP ) = C .
+  op typeName : ObjectTypeName PropName -> [ObjectTypeName] .
+  eq typeName(C,P) = typeName(project(P, cl(C))) .
+
+
+  op op : Field -> [PropName] .
+  eq op( P :t CT [N:Int .. M:Int] { CM } bi(P) ) = P .
+  op op : ObjectTypeName PropName -> [PropName] .
+  eq op(C,P) = op(project(P, cl(C))) .
+
+
+  op lower : Field -> Int .
+  eq lower( P :t CT [N:Int .. M:Int] { CM } OP ) = N:Int .
+  op lower : ObjectTypeName PropName -> Int .
+  eq lower(C,P) = lower(project(P, cl(C))) .
+
+
+  op upper : Field -> Int .
+  eq upper( P :t CT [N:Int .. M:Int] { CM } OP ) = M:Int .
+  op upper : ObjectTypeName PropName -> Int .
+  eq upper(C,P) = upper(project(P, cl(C))) .
+
+
+  op isUnique : Field -> Bool .
+  eq isUnique( P :t CT [N:Int .. M:Int] { set } OP ) = true .
+  eq isUnique( P :t CT [N:Int .. M:Int] { ordered } OP ) = true .
+  eq isUnique( P :t CT [N:Int .. M:Int] { CM } OP ) = false [owise] .
+  op isUnique : ObjectTypeName PropName -> Int .
+  eq isUnique(C,P) = isUnique(project(P, cl(C))) .
+
+  op isOrdered : Field -> Bool .
+  eq isOrdered( P :t CT [N:Int .. M:Int] { ordered } OP ) = true .
+  eq isOrdered( P :t CT [N:Int .. M:Int] { seq } OP ) = true .
+  eq isOrdered( P :t CT [N:Int .. M:Int] { CM } OP ) = false [owise] .
+  op isOrdered : ObjectTypeName PropName -> Int .
+  eq isOrdered(C,P) = isOrdered(project(P, cl(C))) .
+
+  op isAtt : Field -> Bool .
+  eq isAtt( P :t DT [N:Int .. M:Int] { CM } uni ) = true .
+  eq isAtt( P :t CT ) = false [owise] .
+  op isAtt : ObjectTypeName PropName -> Bool .
+  eq isAtt(C,P) = isAtt(project(P, cl(C))) .
+
+  
+  op isRef : Field -> Bool .
+  eq isRef( P :t ref(C) [N:Int .. M:Int] { CM } OP ) = true .
+  eq isRef( P :t ref(C) ) = true . --- backward compatibility
+  eq isRef( P :t CT ) = false [owise] .
+  op isRef : ObjectTypeName PropName -> Bool .
+  eq isRef(C,P) = isRef(project(P, cl(C))) .
+
+  
+  op isCmt : Field -> Bool .
+  eq isCmt( P :t C [N:Int .. M:Int] { CM } OP ) = true .
+  eq isCmt( P :t C ) = true . --- backward compatibility
+  eq isCmt( P :t CT ) = false [owise] .
+  op isCmt : ObjectTypeName PropName -> Bool .
+  eq isCmt(C,P) = isCmt(project(P, cl(C))) .
+
+  op isCont : PropName FieldSet -> Bool .
+  eq isCont( P:PropName, (P:PropName :t C2:QualifiedCid) R:FieldSet ) = true .
+  eq isCont( P:PropName, (P:PropName :t C [N:Int .. M:Int] { CM } OP) R:FieldSet ) = true .
+  eq isCont( P:PropName, R:FieldSet ) = false [owise] .
+
+
+  
+  op _[_.._]_ : CollectionTypeName Int Int OpPropName -> CollectionTypeName [ctor] .
+  eq P :t CT [N .. M] OP = P :t CT [N .. M] { bag } OP .
+  op unique_[_.._]_ : CollectionTypeName Int Int OpPropName -> CollectionTypeName [ctor] .
+  eq P :t unique CT [N .. M] OP = P :t CT [N .. M] { set } OP .
+  op ordered_[_.._]_ : CollectionTypeName Int Int OpPropName -> CollectionTypeName [ctor] .
+  eq P :t ordered CT [N .. M] OP = P :t CT [N .. M] { seq } OP .
+  op unique`ordered_[_.._]_ : CollectionTypeName Int Int OpPropName -> CollectionTypeName [ctor] .
+  eq P :t unique ordered CT [N .. M] OP = P :t CT [N .. M] { ordered } OP .
+  
+
+  sorts TypeNameList ProcType .
+  op nil : -> TypeNameList .
+  subsort Scalar < TypeNameList .
+  op _x_ : Scalar TypeNameList -> TypeNameList .
+
+  op _->_ : TypeNameList Scalar -> ProcType [ctor gather (e E)] .
+
+
+  sorts Parameter ParamList .
+  op nil : -> ParamList .
+  op _,_ : ParamList ParamList -> ParamList [ditto] . --- [ctor prec 50 assoc id: nil] .
+  subsort ParamList < ArgList .
+  subsort Parameter < ParamList .
+  
+  subsort VarExpr < Parameter .
+  op _:_ : VarExpr Scalar -> Parameter [ctor prec 49] .
+
+  sort FunDecl ProcDecl  .
+  op _`(_`)=_:_ : ProcName ParamList Stmt ProcType -> ProcDecl .
+  op _`(_`)=_ : ProcName ParamList Stmt -> ProcDecl .
+  
+  subsort FunDecl < ProcDecl .
+  op _`(_`)=_:_ : FunName ParamList Expr ProcType -> FunDecl .
+  op _`(_`)=_ : FunName ParamList Expr -> FunDecl .
+  
+  subsort ProcDecl < EnvP .
+  subsort ProcDecl < SingletonStmt .
+
+
+
+  op type : CollectionTypeName -> [FmaType] .
+  eq type(BT) = BT .
+  eq type(AnyCid) = { noField } . --- top = { noField }
+  ceq type(C) = { cl(C) } 
+  if (C =/= AnyCid) /\  (C =/= UndefCid) .
+  eq type(UndefCid) = [ noField ] . --- bottom = [ noField ]
+  eq type(E) = [ enum(E) ] .
+
+
+
+
 
   op _<:_ : FmaType FmaType -> Bool .
   eq TAU1 <: TAU2 = subtypeOf(TAU1,TAU2,empty) .
@@ -127,36 +240,54 @@ mod FMA-TYPE-SYNTAX is
     fi .
   
   --- enum type names
+  eq subtypeOf(UndefCid, QE2, SCS) = true .  
   eq subtypeOf(QE1, QE2, SCS) = 
-    subtypeOf(enum(QE1), enum(QE2), SCS) .
+    subtypeOf(type(QE1), type(QE2), SCS) .
 
   --- class names
   eq subtypeOf(QC1, AnyCid, SCS) = true .
   eq subtypeOf(UndefCid, QC2, SCS) = true .
 
   eq subtypeOf(QC1, QC2, SCS) = 
-    subtypeOf({ cl(QC1) }, { cl(QC2) }, SCS) .
+    subtypeOf( type(QC1), type(QC2), SCS) .
+
+  --- attributes
+  eq subtypeOf( (UndefCid [L1 .. U1] {CM1} OP1), (DT2 [L2 .. U2] {CM2} OP2), SCS ) = true .
+
+  eq subtypeOf( (DT1 [L1 .. U1] {CM1} OP1), (DT2 [L2 .. U2] {CM2} OP2), SCS ) = 
+    if (    
+      --- we don't consider constraints for attributes yet
+      ---        not(isLessRestrictiveThan( (DT1 [L1 .. U1] {CM1} OP1) , (DT2 [L2 .. U2] {CM2} OP2))) and-then      
+      (subtypeOf(type(DT1), type(DT2), SCS ))  --- add caching? cached(DT1, DT2)
+    ) then
+      true
+    else
+      false
+    fi
+  .  
     
   --- containments
-  eq subtypeOf( (MTN1 ! SC1 [L1 .. U1] {CM1} OP1), (MTN2 ! SC2 [L2 .. U2] {CM2} OP2), SCS ) = 
-    if (isCached(MTN1 ! SC1, MTN2 ! SC2, SCS)) then  --- there is a loop
+  eq subtypeOf( (C1 [L1 .. U1] {CM1} OP1), (C2 [L2 .. U2] {CM2} OP2), SCS ) = 
+    if (isCached(C1, C2, SCS)) then  --- there is a loop
       true
     else
       if (
-        not(isLessRestrictiveThan( (MTN1 ! SC1 [L1 .. U1] {CM1} OP1) , (MTN2 ! SC2 [L2 .. U2] {CM2} OP2))) 
-      and-then 
-        (subtypeOf({ cl(MTN1 ! SC1) }, { cl(MTN2 ! SC2) }, SCS cached(MTN1 ! SC1, MTN2 ! SC2))) 
-      )
-      then
+        (
+            not(isLessRestrictiveThan( (C1 [L1 .. U1] {CM1} OP1) , (C2 [L2 .. U2] {CM2} OP2))) 
+          and-then 
+            (subtypeOf(type(C1), type(C2), SCS cached(C1, C2))) 
+        )
+      ) then
         true
       else
         false
       fi
-    fi .
+    fi 
+  .
     
   --- cross-references   
-  eq subtypeOf( ref MTN1 ! SC1 [L1 .. U1] {CM1} OP1, ref MTN2 ! SC2 [L2 .. U2] {CM2} OP2, SCS ) = 
-    subtypeOf( (MTN1 ! SC1 [L1 .. U1] {CM1} OP1), (MTN2 ! SC2 [L2 .. U2] {CM2} OP2), SCS ) .
+  eq subtypeOf( ref(C1) [L1 .. U1] {CM1} OP1, ref(C2) [L2 .. U2] {CM2} OP2, SCS ) = 
+    subtypeOf( (C1 [L1 .. U1] {CM1} OP1), (C2 [L2 .. U2] {CM2} OP2), SCS ) .
 
   --- RECORD TYPES
   --- {noField} is top (all records) and subsumes any other cl
@@ -164,7 +295,7 @@ mod FMA-TYPE-SYNTAX is
   ceq subtypeOf({ noField } , { R2 }, SCS) = false
   if R2 =/= noField .
   --- NoRecord (cl(Undef)) is bottom
-  eq subtypeOf({ NoRecord }, { R2 }, SCS) = true . 
+  eq subtypeOf([ noField ], { R2 }, SCS) = true . 
   
   eq subtypeOf( { (P :t ALPHA1) R1 }, { (P :t ALPHA2) R2 }, SCS ) = 
     if (subtypeOf( ALPHA1, ALPHA2, SCS ) ) then
@@ -177,20 +308,18 @@ mod FMA-TYPE-SYNTAX is
   eq subtypeOf([ R1 ], [ noField ], SCS) = false . --- added for the sake of completion 
   ceq subtypeOf([ noField ] , [ R2 ], SCS) = true 
   if R2 =/= noField .
-  
+
+
   eq subtypeOf( [ (P :t ALPHA1) R1 ], [ (P :t ALPHA2) R2 ], SCS ) = 
     if (subtypeOf( ALPHA1, ALPHA2, SCS ) ) then
       subtypeOf([ R1 ], [ R2 ], SCS) --- add caching ?
     else
       false 
     fi .
+    
 
   --- FUNCTION TYPES: not considered yet
   eq subtypeOf( TAU1, TAU2, SCS ) = false [owise] .
-
-
-
-
 
 
 
@@ -201,17 +330,17 @@ mod FMA-TYPE-SYNTAX is
   subsort SubtypeCheck < SubtypeCheckSet .
   op __ : SubtypeCheckSet SubtypeCheckSet -> SubtypeCheckSet [comm assoc id: empty] .
   op empty : -> SubtypeCheckSet .
-  op cached : QualifiedCid QualifiedCid -> SubtypeCheck .  
+  op cached : CollectionTypeName CollectionTypeName -> SubtypeCheck .  
   var SCS : SubtypeCheckSet . 
     
-  op isCached : QualifiedCid QualifiedCid SubtypeCheckSet -> Bool .
-  eq isCached(C1, C2, cached(C1,C2) SCS) = true .
-  eq isCached(C1, C2, SCS) = false [owise] .
+  op isCached : CollectionTypeName CollectionTypeName SubtypeCheckSet -> Bool .
+  eq isCached(CT1, CT2, cached(CT1,CT2) SCS) = true .
+  eq isCached(CT1, CT2, SCS) = false [owise] .
     
 
 
   vars CM1, CM2 : CollectionModifier .
-  vars L1 L2 : Nat .
+  vars L1 L2 : Int .
   vars U1 U2 : Int .
 
 
@@ -222,14 +351,18 @@ mod FMA-TYPE-SYNTAX is
   --- however, we will only define it for containments to reduce clutter
   --- as the case is absolutely symmetric
   eq isLessRestrictiveThan( 
-    MTN1 ! SC1 [ L1 .. U1 ] { CM1 } OP1,
-    MTN2 ! SC2 [ L2 .. U2 ] { CM2 } OP2
+    CT1 [ L1 .. U1 ] { CM1 } OP1,
+    CT2 [ L2 .. U2 ] { CM2 } OP2
   ) = 
-    L1 < L2 
+    CT1 == UndefCid
+  or-else
+    --- this only makes sense to allow the inference of a constraint [-1..0]
+    --- otherwise it can be simplified to  L1 < L2 (as in the paper)
+    (L1 =/= -1 and-then L2 =/= -1 and-then L1 < L2)
   or-else 
-    (
-      (U1 =/= -1 and-then U1 > U2) or-else (U1 == -1 and-then U2 > -1)
-    )
+    (U1 =/= -1 and-then U2 =/= -1 and-then U1 > U2)
+    or-else
+    (U1 == -1 and-then U2 =/= -1) 
   or-else
     (
       isLessRestrictiveThan(CM1,CM2)
@@ -246,21 +379,27 @@ mod FMA-TYPE-SYNTAX is
   eq isLessRestrictiveThan( seq, ordered ) = true . --- violates uniqueness
   eq isLessRestrictiveThan( CM1:CollectionModifier, CM2:CollectionModifier ) = false [owise] .
 
+
+
+
+
+
+  --- UNIT TYPE: whose value is ()
+  op Unit : -> UnitType . 
+  
+
   --- domainRestriction(R1,R2) projects those fields from R2 whose name are found in fields of R1, i.e. domainRestriction(R1,R2)  
-  op domainRestriction : FieldSet FieldSet ~> Field .
+  op domainRestriction : RecordType RecordType ~> RecordType .
+  eq domainRestriction( { R1 }, { R2 } ) = 
+    { domainRestriction(R1, R2) } .
+
+  op domainRestriction : FieldSet FieldSet ~> FieldSet .
   eq domainRestriction( (P :t ALPHA1) R1, (P :t ALPHA2) R2 ) = (P :t ALPHA2) domainRestriction(R1,R2) .
   eq domainRestriction( R1, R2 ) = noField [owise] .
  
 
 
-
-
-
-
-  --- UNIT TYPE
-  op stmtUnit : -> StmtUnit . 
-  op actUnit : -> ActUnit . 
-  
-    
 endm
+
+
 

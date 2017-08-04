@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<subtype_sm__sm:sm_StateMachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:subtype_sm__sm="subtype_sm__sm" name="SM" initial="//@nodes.0">
+  <nodes xsi:type="subtype_sm__sm:sm_State" name="a"/>
+  <nodes xsi:type="subtype_sm__sm:sm_State" name="b"/>
+  <edges xsi:type="subtype_sm__sm:sm_Transition" name="a->b" source="//@nodes.0" target="//@nodes.1">
+    <event name="a->b"/>
+  </edges>
+</subtype_sm__sm:sm_StateMachine>
