@@ -1,0 +1,19 @@
+context Transition
+inv determinism:
+not(Transition.allInstances()->exists(t | 
+	t.source=self.source
+	and
+	t.target<>self.target 
+))
+
+context Transition
+inv eventTransition: 
+name <> '' implies isCompletion=false
+
+context State
+inv stateContainment:
+StateMachine.allInstances()->exists(sm | sm.nodes->includes(self))
+
+context Transition
+inv transitionContainment:
+StateMachine.allInstances()->exists(sm | sm.edges->includes(self))

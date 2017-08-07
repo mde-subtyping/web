@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm1:StateMachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sm1="emf.model.type.sm.steel.sm1" xsi:schemaLocation="emf.model.type.sm.steel.sm1 sm1.ecore"/>

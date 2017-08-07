@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>subtyping.sm.atl</name>
+	<name>subtyping.sm.atl.evolution</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -10,8 +10,13 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments/>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.m2m.atl.adt.builder.atlNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
 </projectDescription>

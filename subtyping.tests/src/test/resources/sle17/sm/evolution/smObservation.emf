@@ -1,0 +1,38 @@
+@namespace(uri="fma.subtyping.sm", prefix="sm.concepts")
+package sm;
+
+class StateMachine {
+  attr String name;
+  ref State initial;
+  ref State[*] final;
+  val State[*] nodes;
+  val Transition[*] edges;
+  val Observation[*] marks;
+}
+
+class State {
+  attr String name;
+  val StateMachine[*] subMachines;
+  ref Observation mark;
+  ref StateMachine[1] graph;
+}
+
+class Transition {
+  attr String name;
+  ref State[1] source;
+  ref State[1] target;
+  ref StateMachine[1] graph;
+}
+
+class Observation {
+  attr Integer time;
+  ref State[1] node;
+  ref StateMachine[1] graph;
+}
+
+datatype Boolean : boolean;
+
+datatype Integer : int;
+
+datatype String : java.lang.String;
+

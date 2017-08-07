@@ -1,7 +1,7 @@
 -- @path sm=/subtyping.sm.atl/models/sm.ecore
 query SM2Text = sm!StateMachine.allInstances()
 		->asSequence()
-		->first().compile().writeTo('subtyping.sm.atl/models/test.txt');
+		->first().compile().println(); -- writeTo('subtyping.sm.atl.evolution/models/test.txt');
 
 helper context sm!StateMachine def: compile() : String =
 	'events\n' +

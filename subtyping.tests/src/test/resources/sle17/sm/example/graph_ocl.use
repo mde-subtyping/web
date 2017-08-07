@@ -1,0 +1,4 @@
+context Graph
+inv supertype_constraint1:
+self.nodes->size() > 1
+

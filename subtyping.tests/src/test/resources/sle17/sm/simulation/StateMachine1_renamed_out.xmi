@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<sm.concepts:StateMachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sm.concepts="fma.subtyping.sm" name="SM">
+  <nodes xsi:type="sm.concepts:State" name="S1" mark="//@marks.0"/>
+  <nodes xsi:type="sm.concepts:State" name="S2" mark="//@marks.1"/>
+  <nodes xsi:type="sm.concepts:State" name="S3"/>
+  <edges xsi:type="sm.concepts:Transition" name="S1->S2" source="//@nodes.0" target="//@nodes.1"/>
+  <edges xsi:type="sm.concepts:Transition" name="S2->S3" source="//@nodes.1" target="//@nodes.2"/>
+  <marks xsi:type="sm.concepts:Observation" time="1" node="//@nodes.0"/>
+  <marks time="2" node="//@nodes.1"/>
+</sm.concepts:StateMachine>

@@ -1,0 +1,11 @@
+context StateMachine
+inv subtype_constraint1:
+self.nodes->size() > 4
+
+context State
+inv stateContainment:
+StateMachine.allInstances()->exists(sm | sm.nodes->includes(self))
+
+context Transition
+inv transitionContainment:
+StateMachine.allInstances()->exists(sm | sm.edges->includes(self))

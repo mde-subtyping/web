@@ -1,0 +1,87 @@
+@namespace(uri="fma.subtyping.sm", prefix="sm.concepts")
+package sm;
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="StateMachine")
+@"http://package/name"("package"="sm")
+@"http://class/subTypeOf"(subtype_of="StateMachine")
+class sm_StateMachine extends StateMachine {
+}
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="State")
+@"http://package/name"("package"="sm")
+@"http://class/subTypeOf"(subtype_of="State")
+class sm_State extends State {
+}
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="Transition")
+@"http://package/name"("package"="sm")
+@"http://class/subTypeOf"(subtype_of="Transition")
+class sm_Transition extends Transition {
+  val Event[1] event;
+}
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="Event")
+@"http://package/name"("package"="sm")
+class Event {
+  attr sm_String name;
+}
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="Boolean")
+@"http://package/name"("package"="sm")
+datatype sm_Boolean : boolean;
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="Integer")
+@"http://package/name"("package"="sm")
+datatype sm_Integer : int;
+
+@"http://class/subtypePrefix"(subtyping_operand="subtype")
+@"http://class/name"(name="String")
+@"http://package/name"("package"="sm")
+datatype sm_String : java.lang.String;
+
+@"http://class/name"(name="StateMachine")
+@"http://package/name"("package"="sm")
+@"http://class/superTypeOf"(supertype_of="sm_StateMachine")
+class StateMachine {
+  attr String name;
+  ref State initial;
+  ref State[*] final;
+  val State[*] nodes;
+  val Transition[*] edges;
+}
+
+@"http://class/name"(name="State")
+@"http://package/name"("package"="sm")
+@"http://class/superTypeOf"(supertype_of="sm_State")
+class State {
+  attr String name;
+  val StateMachine[*] subMachines;
+}
+
+@"http://class/name"(name="Transition")
+@"http://package/name"("package"="sm")
+@"http://class/superTypeOf"(supertype_of="sm_Transition")
+class Transition {
+  attr String name;
+  ref State[1] source;
+  ref State[1] target;
+}
+
+@"http://class/name"(name="Boolean")
+@"http://package/name"("package"="sm")
+datatype Boolean : boolean;
+
+@"http://class/name"(name="Integer")
+@"http://package/name"("package"="sm")
+datatype Integer : int;
+
+@"http://class/name"(name="String")
+@"http://package/name"("package"="sm")
+datatype String : java.lang.String;
+

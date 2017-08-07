@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sm.concepts:StateMachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sm.concepts="fma.subtyping.sm" name="SM">
+  <nodes name="S1" mark="//@marks.0"/>
+  <nodes name="S2" mark="//@marks.1"/>
+  <nodes name="S3"/>
+  <edges name="S1->S2" source="//@nodes.0" target="//@nodes.1"/>
+  <edges name="S2->S3" source="//@nodes.1" target="//@nodes.2"/>
+  <marks time="1" node="//@nodes.0"/>
+  <marks time="2" node="//@nodes.1"/>
+</sm.concepts:StateMachine>

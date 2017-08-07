@@ -1,0 +1,27 @@
+@namespace(uri="emf.model.type.sm.steel.sm6", prefix="sm6")
+package sm6;
+
+class StateMachine {
+  ref State initialState;
+  ref State[*]#sm states;
+  val Transition[*] edges;
+}
+
+class State {
+  attr String[1] name;
+  attr Boolean[1] isFinal;
+  ref StateMachine#states sm;
+  ref Transition[*]#src outgoing;
+  ref Transition[*]#tgt incoming;
+}
+
+class Transition {
+  attr String[1] event;
+  ref State[1]#outgoing src;
+  ref State[1]#incoming tgt;
+}
+
+datatype String : java.lang.String;
+
+datatype Boolean : boolean;
+

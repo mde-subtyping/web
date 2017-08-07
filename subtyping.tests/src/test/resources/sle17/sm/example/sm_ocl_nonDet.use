@@ -1,0 +1,31 @@
+context State
+inv ErrorNode:
+State.allInstances()->exists(name='ErrorState') 
+
+context State
+inv constraint_transitions:
+let ERROR_STATE = State.allInstances()->select(name='ErrorState')->asSequence()->first()
+in
+Transition.allInstances()->exists(t1 |
+	t1.source=self
+	and
+	t1.name='error'
+	and
+	t1.target=ERROR_STATE
+)
+and 
+Transition.allInstances()->exists(t2 |
+	t2.source=self
+	and
+	t2.target<>ERROR_STATE	
+) 
+
+context State
+inv stateContainment:
+StateMachine.allInstances()->exists(sm | sm.nodes->includes(self))
+
+context Transition
+inv transitionContainment:
+StateMachine.allInstances()->exists(sm | sm.edges->includes(self))
+
+

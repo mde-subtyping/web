@@ -41,10 +41,10 @@
 	<classpathentry kind="lib" path="/Users/ab373/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/maude4j-0.0.1-20170518.111735-91.jar"/>
 	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.emf.registry-0.0.5-20170518.111748-86.jar"/>
-	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.filter.emf-0.0.1-20170804.134032-122.jar"/>
+	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.filter.emf-0.0.1-20170807.194830-124.jar"/>
 	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.integration.use-0.0.2-20170620.072033-18.jar"/>
-	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.interpreter-0.0.2-20170804.134040-70.jar"/>
-	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.metamodel.subtyping-0.0.1-20170804.134134-16.jar"/>
+	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.interpreter-0.0.2-20170807.194837-72.jar"/>
+	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.metamodel.subtyping-0.0.1-20170807.194938-18.jar"/>
 	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/fma.model-1.0.0-20170518.111813-16.jar"/>
 	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/use/ModelValidatorPlugin-NIGHTLY-build5555.jar"/>
 	<classpathentry kind="lib" path="/Users/ab373/Documents/ArturData/WORK/git/web/subtyping.tests/lib/use/use-runtime.jar"/>

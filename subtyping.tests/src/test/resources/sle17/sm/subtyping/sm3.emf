@@ -1,0 +1,24 @@
+@namespace(uri="emf.model.type.sm.steel.sm3", prefix="sm3")
+package sm3;
+
+class StateMachine {
+  ref State[1] initialState;
+  ref State[*]#sm states;
+  val Transition[*] edges;
+}
+
+class State {
+  attr String[1..1] name;
+  ref StateMachine[0..1]#states sm;
+  ref Transition[*]#src outgoing;
+  ref Transition[*]#tgt incoming;
+}
+
+class Transition {
+  attr String[1..1] event;
+  ref State[1]#outgoing src;
+  ref State[1]#incoming tgt;
+}
+
+datatype String : java.lang.String;
+	

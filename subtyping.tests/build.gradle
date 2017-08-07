@@ -43,10 +43,10 @@ dependencies {
 	compile files(
 		'./lib/maude4j-0.0.1-20170518.111735-91.jar',
 		'./lib/fma.emf.registry-0.0.5-20170518.111748-86.jar',
-		'./lib/fma.filter.emf-0.0.1-20170804.134032-122.jar',
+		'./lib/fma.filter.emf-0.0.1-20170807.194830-124.jar',
 		'./lib/fma.integration.use-0.0.2-20170620.072033-18.jar',
-		'./lib/fma.interpreter-0.0.2-20170804.134040-70.jar',
-		'./lib/fma.metamodel.subtyping-0.0.1-20170804.134134-16.jar',
+		'./lib/fma.interpreter-0.0.2-20170807.194837-72.jar',
+		'./lib/fma.metamodel.subtyping-0.0.1-20170807.194938-18.jar',
 		'./lib/fma.model-1.0.0-20170518.111813-16.jar',
 		'./lib/use/ModelValidatorPlugin-NIGHTLY-build5555.jar', 
 		'./lib/use/use-runtime.jar',

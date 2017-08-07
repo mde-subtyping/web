@@ -29,20 +29,19 @@ If the check succeeds, the tool guarantees that `(sMMPath,sOcl)` is a structural
 
 This document explains how to download and configure a tool for testing structural model subtyping for metamodel specifications in MDE and for reusing (EMF) model management operations. The contents of the archive are as follows:
 * [README.txt](./README.txt): this document
-  * [Setup/installation guide](#Setup/installation-guide)
-    * [Environment assumptions to use the tool](#Environment-assumptions-to-use-the-tool)
-    * [macOS: Inspecting the test cases](#macOS-Inspecting-the-test-cases)
-    * [Linux: inspecting the test cases](#Linux:-inspecting-the-test-cases)
-    * [Linux (VirtualBox)](#Linux-(VirtualBox))
-  * [Step-by-step instructions](#Step-by-step-instructions)
-    * [Invoking the tool programmatically](#Invoking-the-tool-programmatically)
-    * [Scenario 1: Structural subtyping (Subtyping)](#Scenario-1:-Structural-subtyping-(Subtyping))
-    * [Scenario 2: Structural subtyping with OCL constraints (Subtyping, Multiple-Typing)](#Scenario-2:-Structural-subtyping-with-OCL-constraints-(Subtyping,-Multiple-Typing))
-    * [Scenario 3: DSML evolution (Reuse, Partial Typing)](#Scenario-3:-DSML-evolution-(Reuse,-Partial-Typing))
-    * [Scenario 4: Stepwise Simulation of Deterministic State Machines (Reuse, Dynamic Typing)](#Scenario-4:-Stepwise-Simulation-of-Deterministic-State-Machines-(Reuse,-Dynamic-Typing))
-  * [License](#License)
-  * [Credits](#Credits)
-
+  * Setup/installation guide
+    * Environment assumptions to use the tool
+    * macOS: Inspecting the test cases
+    * Linux: inspecting the test cases
+    * Linux (VirtualBox)
+  * Step-by-step instructions](#Step-by-step-instructions)
+    * Invoking the tool programmatically
+    * Scenario 1: Structural subtyping (Subtyping)
+    * Scenario 2: Structural subtyping with OCL constraints (Subtyping, Multiple-Typing)
+    * Scenario 3: DSML evolution (Reuse, Partial Typing)
+    * Scenario 4: Stepwise Simulation of Deterministic State Machines (Reuse, Dynamic Typing)
+  * License
+  * Credits
 * [README.html](./README.html): this document in HTML format. Images are displayed.
 * Tool usage illustrated in a number of test cases:
   * [main project](./subtyping.tests): contains the main test cases and shows how to invoke the tool programmatically, including 

@@ -1,0 +1,7 @@
+context Edge
+inv map:
+not(Edge.allInstances()->exists(e | 
+	e.source=self.source
+	and
+	e.target<>self.target 
+))

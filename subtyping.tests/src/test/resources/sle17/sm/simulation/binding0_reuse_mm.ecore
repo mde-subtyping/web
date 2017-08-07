@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sm" nsURI="fma.subtyping.sm" nsPrefix="sm.concepts">
+  <eClassifiers xsi:type="ecore:EClass" name="StateMachine" eSuperTypes="#//Graph">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="StateMachine"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/subTypeOf">
+      <details key="subtype_of" value="Graph"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initial" eType="#//State"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="final" upperBound="-1"
+        eType="#//State"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//Node">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="State"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/subTypeOf">
+      <details key="subtype_of" value="Node"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subMachines" upperBound="-1"
+        eType="#//StateMachine" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Edge">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Transition"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/subTypeOf">
+      <details key="subtype_of" value="Edge"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Observation" eSuperTypes="#//Mark">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Observation"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/subTypeOf">
+      <details key="subtype_of" value="Mark"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="sm_Boolean" instanceClassName="boolean">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Boolean"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="sm_Integer" instanceClassName="int">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Integer"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="sm_String" instanceClassName="java.lang.String">
+    <eAnnotations source="http://class/subtypePrefix">
+      <details key="subtyping_operand" value="subtype"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/name">
+      <details key="name" value="String"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="sm"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Graph">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Graph"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/superTypeOf">
+      <details key="supertype_of" value="StateMachine"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//Node" containment="true" eOpposite="#//Node/graph"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
+        eType="#//Edge" containment="true" eOpposite="#//Edge/graph"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="marks" upperBound="-1"
+        eType="#//Mark" containment="true" eOpposite="#//Mark/graph"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Node">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Node"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/superTypeOf">
+      <details key="supertype_of" value="State"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mark" eType="#//Mark" eOpposite="#//Mark/node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//Graph"
+        eOpposite="#//Graph/nodes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Edge">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Edge"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/superTypeOf">
+      <details key="supertype_of" value="Transition"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//Node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//Graph"
+        eOpposite="#//Graph/edges"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mark">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Mark"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+    <eAnnotations source="http://class/superTypeOf">
+      <details key="supertype_of" value="Observation"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="#//Integer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" lowerBound="1" eType="#//Node"
+        eOpposite="#//Node/mark"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//Graph"
+        eOpposite="#//Graph/marks"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="String"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="boolean">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Boolean"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="int">
+    <eAnnotations source="http://class/name">
+      <details key="name" value="Integer"/>
+    </eAnnotations>
+    <eAnnotations source="http://package/name">
+      <details key="package" value="graph"/>
+    </eAnnotations>
+  </eClassifiers>
+</ecore:EPackage>
