@@ -1,0 +1,35 @@
+@namespace(uri="fma.metamodel.graph", prefix="graph")
+package graph;
+
+class Graph {
+  attr String name;
+  val Node[*]#graph nodes;
+  val Edge[*]#graph edges;
+  val Mark[*]#graph marks;
+}
+
+class Node {
+  attr String name;
+  ref Mark#node mark;
+  ref Graph[1]#nodes graph;
+}
+
+class Edge {
+  attr String name;
+  ref Node[1] source;
+  ref Node[1] target;
+  ref Graph[1]#edges graph;
+}
+
+class Mark {
+  attr Integer time;
+  ref Node[1]#mark node;
+  ref Graph[1]#marks graph;
+}
+
+datatype String : java.lang.String;
+
+datatype Boolean : boolean;
+
+datatype Integer : int;
+

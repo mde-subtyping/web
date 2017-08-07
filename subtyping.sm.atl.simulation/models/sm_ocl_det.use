@@ -1,0 +1,9 @@
+context Transition
+inv determinism:
+not(Transition.allInstances()->exists(t | 
+	t.source=self.source
+	and
+	t.target<>self.target 
+))
+
+

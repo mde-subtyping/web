@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph:Graph
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:graph="fma.metamodel.graph">
+  <nodes name="A"
+      mark="//@marks.0"/>
+  <nodes name="B"/>
+  <nodes name="C"/>
+  <edges name="A->B"
+      source="//@nodes.0"
+      target="//@nodes.1"/>
+  <edges name="B->C"
+      source="//@nodes.1"
+      target="//@nodes.2"/>
+  <marks time="1"
+      node="//@nodes.0"/>
+</graph:Graph>

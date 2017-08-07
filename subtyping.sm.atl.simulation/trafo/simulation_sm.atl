@@ -1,0 +1,17 @@
+-- @path graph=/subtyping.sm.simulation/models/extension.ecore
+module simulation;
+create OUT : graph refining IN : graph;
+
+rule simulate {
+	from 
+		n1 : graph!State ( n1.mark.oclIsUndefined() and graph!Transition.allInstances()->exists( e | e.target=n1 and not e.source.mark.oclIsUndefined()) ) 
+	to
+		n2 : graph!State (
+			mark <- m		
+		),
+		m : graph!Observation (
+			graph <- n1.graph,
+			time <- graph!Transition.allInstances()->select( e | e.target=n1 and not e.source.mark.oclIsUndefined())->asSequence()->first().source.mark.time + 1
+		)	
+}
+

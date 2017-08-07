@@ -1,0 +1,16 @@
+-- @path graph=/subtyping.sm.simulation/models/graph.ecore
+module simulation;
+create OUT : graph refining IN : graph;
+
+rule simulate {
+	from 
+		n1 : graph!Node ( n1.mark.oclIsUndefined() and graph!Edge.allInstances()->exists( e | e.target=n1 and not e.source.mark.oclIsUndefined()) ) 
+	to
+		n2 : graph!Node (
+			mark <- m		
+		),
+		m : graph!Mark (
+			graph <- n1.graph,
+			time <- graph!Edge.allInstances()->select( e | e.target=n1 and not e.source.mark.oclIsUndefined())->asSequence()->first().source.mark.time + 1
+		)	
+}
