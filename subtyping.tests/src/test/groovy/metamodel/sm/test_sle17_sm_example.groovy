@@ -98,12 +98,13 @@ class test_sle17_sm_example extends Specification {
 	}
 
 	@Test
-	public void "test_multipleInheritance_isSubtypeOf_superEmpty"() {
+	public void "test_multipleInheritance_isSubtypeOf_subEmpty_superEmpty"() {
 		def sMMPath =  "src/test/resources/sle17/sm/example/sm.ecore"
-		def sOclPath =  "src/test/resources/sle17/sm/example/sm_ocl_correct.use"
 		def tMMPath = "src/test/resources/sle17/sm/example/graph.ecore"
-		def tOclPath = "src/test/resources/sle17/sm/example/graph_ocl_empty.use"
-		
+
+		def sOcl = ''
+		def tOcl = ''
+
 		def propFilePath = "src/test/resources/sle17/sm/example/subtyping.properties"
 		SolverProperties.loadPropertiesFile(propFilePath)
 		
@@ -113,9 +114,49 @@ class test_sle17_sm_example extends Specification {
 		tool.debugMode = true
 		tool.outputPath="src/test/resources/sle17/sm/example/generated/"
 		
+		expect: tool.isOclConstrainedSubtypeOf(sMMPath, sOcl, tMMPath, tOcl) == true
+	}
+	
+	@Test
+	public void "test_singleInheritance_isSubtypeOf_superEmpty"() {
+		def sMMPath =  "src/test/resources/sle17/sm/example/sm.ecore"
+		def sOclPath =  "src/test/resources/sle17/sm/example/sm_ocl_det.use"
+		def tMMPath = "src/test/resources/sle17/sm/example/graph.ecore"
+		def tOclPath = "src/test/resources/sle17/sm/example/graph_ocl_mapProperty.use"
+
+		def sOcl = ''
+		def tOcl = new File(tOclPath).text
+
+		def propFilePath = "src/test/resources/sle17/sm/example/subtyping.properties"
+		SolverProperties.loadPropertiesFile(propFilePath)
+		
+		def ModelTypeUtils tool = new ModelTypeUtils()
+		tool.persistent=true
+		tool.multipleInheritance = false
+		tool.debugMode = true
+		tool.outputPath="src/test/resources/sle17/sm/example/generated/"
+		
+		expect: tool.isOclConstrainedSubtypeOf(sMMPath, sOcl, tMMPath, tOcl) == false
+	}
+
+	@Test
+	public void "test_multipleInheritance_isSubtypeOf_subEmpty"() {
+		def sMMPath =  "src/test/resources/sle17/sm/example/sm.ecore"
+		def sOclPath =  "src/test/resources/sle17/sm/example/sm_ocl_det.use"
+		def tMMPath = "src/test/resources/sle17/sm/example/graph.ecore"
+		def tOclPath = "src/test/resources/sle17/sm/example/graph_ocl_det.use"
 		
 		def sOcl = new File(sOclPath).text
-		def tOcl = new File(tOclPath).text
+		def tOcl = ''
+		
+		def propFilePath = "src/test/resources/sle17/sm/example/subtyping.properties"
+		SolverProperties.loadPropertiesFile(propFilePath)
+		
+		def ModelTypeUtils tool = new ModelTypeUtils()
+		tool.persistent=true
+		tool.multipleInheritance = true
+		tool.debugMode = true
+		tool.outputPath="src/test/resources/sle17/sm/example/generated/"
 		
 		expect: tool.isOclConstrainedSubtypeOf(sMMPath, sOcl, tMMPath, tOcl) == true
 	}

@@ -17,7 +17,7 @@ This document contains three main sections: an overview of the contents in the z
 ## Overview: content of the archive
 
 The contents of the archive are as follows:
-* [README.md](https://github.com/mde-subtyping/web/blob/master/README.md): this document
+* [README.md](./README.md): this document
   * Setup/installation guide
     * Environment assumptions for using the tool
     * Getting the tool
@@ -30,10 +30,10 @@ The contents of the archive are as follows:
     * Scenario 4: Stepwise Simulation of Deterministic State Machines (**Reuse, Dynamic Typing**)
   * License
   * Credits
-* [README_offline.md](https://github.com/mde-subtyping/web/blob/master/README_offline.md): offline version of the file `README.md`. The difference between these two files is that `README.md` is readable on GitHub and `README_offline.md` is pretty printed as `.README_offline.md.html`, which is readable in a browser offline - that is URL paths are accessible using `file:///` in the browser.
-* [.README_offline.md.html](https://github.com/mde-subtyping/web/blob/master/.README_offline.md.html): `README_offline.md` in HTML format. Images should be displayed correctly and there is no need to access any external resource unless the VirtualBox image is downloaded, in which case Google Drive will be accessed.
+* [README_offline.md](./README_offline.md): offline version of the file `README.md`. The difference between these two files is that `README.md` is readable on GitHub and `README_offline.md` is pretty printed as `.README_offline.md.html`, which is readable in a browser offline - that is URL paths are accessible using `file:///` in the browser.
+* [.README_offline.md.html](./.README_offline.md.html): `README_offline.md` in HTML format. Images should be displayed correctly and there is no need to access any external resource unless the VirtualBox image is downloaded, in which case Google Drive will be accessed.
 * Three projects used in the examples that illustrate the step-by-step instructions:
-  * [subtyping.tests](https://github.com/mde-subtyping/web/blob/master/subtyping.tests): main project that contains the main test cases and shows how to invoke the tool programmatically, including 
+  * [subtyping.tests](./subtyping.tests): main project that contains the main test cases and shows how to invoke the tool programmatically, including 
     * how the tool supports **structural subtyping with optional OCL constraints** for checking structural refinement between metamodel specifications, formed by a metamodel and well-formedness constraints in OCL;
     * **multiple model subtyping**;
     * an scenario on DSML evolution illustrating how the tool provides support for **partial model subtyping**;
@@ -110,7 +110,7 @@ In the following subsections, we provide the examples used to illustrate the cor
 
 The usual structure of a test exercising the subtyping operation is as follows:
 
-* Load the configuration properties for the solver (an example can be found [here](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/sle17/sm/example/subtyping.properties)) indicating where Maude is stored and the bounds to be used by the model finder:
+* Load the configuration properties for the solver (an example can be found [here](./subtyping.tests/src/test/resources/sle17/sm/example/subtyping.properties)) indicating where Maude is stored and the bounds to be used by the model finder:
 
 		SolverProperties.loadPropertiesFile(propFilePath)
 
@@ -165,7 +165,7 @@ In this section, we show the expressivity of our structural subtyping operation 
 
 where changes have been highlighted. 
 
-The test cases implementing the subtyping checks can be found [here](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_subtyping.groovy) and the results are summarized in the following table:
+The test cases implementing the subtyping checks can be found [here](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_subtyping.groovy) and the results are summarized in the following table:
 
 | subtypeOf | sm1 | sm2 | sm3 | sm4 | sm5 | 
 |--|--|--|--|--|--|
@@ -182,23 +182,23 @@ These results are consistent with those presented in [^Steel07] but for the case
 
 In this section, we use the main example of the paper for illustrating how **multiple typings** can be applied to a metamodel at the classifier level, that is, a class of the subtype metamodel can be typed by more than one class in the supertype metamodel. The generalization of multiple typing at the metamodel level, where several metamodels can be used as supertype of the same subtype metamodel, is supported by providing an extension metamodel for each different pair of metamodel specifications. However, as each such extension metamodel is linked to a different pair of metamodel specifications, with the intention of reusing a model management operation in a given context, we restrict ourselves to an example with one single model management operation.
 
-In the example, we are using the metamodel specifications depicted below for defining graphs ([metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/sle17/sm/example/graph.emf) and [OCL constraints](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/sle17/sm/example/graph_ocl_mapProperty.use)) and deterministic state machines ([metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/sle17/sm/example/sm.emf) and [OCL constraints](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/sle17/sm/example/sm_ocl_det.use)), resp. The model types described by both metamodels are structurally similar in that they both describe languages of graphs.
+In the example, we are using the metamodel specifications depicted below for defining graphs ([metamodel](./subtyping.tests/src/test/resources/sle17/sm/example/graph.emf) and [OCL constraints](./subtyping.tests/src/test/resources/sle17/sm/example/graph_ocl_mapProperty.use)) and deterministic state machines ([metamodel](./subtyping.tests/src/test/resources/sle17/sm/example/sm.emf) and [OCL constraints](./subtyping.tests/src/test/resources/sle17/sm/example/sm_ocl_det.use)), resp. The model types described by both metamodels are structurally similar in that they both describe languages of graphs.
 
 <img src="images/example.png" height="450">
 
 On the one hand, the top metamodel specification characterizes the graph of a function defined over nodes. On the other hand, the bottom metamodel specification characterizes deterministic state machines where transitions can be triggered by an event (indicated in the *name* attribute of the transition) or are triggerless, e.g. they are completion transitions. 
 
-[These test cases](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy) show how to use the tool to check that the state machine metamodel specification denotes a model subtype of the one denoted by the graph metamodel:
-* Using [strict subtyping (test_singleInheritance_isSubtypeOf_consistent)](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy):
-* Using [multiple subtyping (test_multipleInheritance_isSubtypeOf_consistent)](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy):
+[These test cases](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy) show how to use the tool to check that the state machine metamodel specification denotes a model subtype of the one denoted by the graph metamodel:
+* Using [strict subtyping (test_singleInheritance_isSubtypeOf_consistent)](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy):
+* Using [multiple subtyping (test_multipleInheritance_isSubtypeOf_consistent)](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy):
   
-Moreover, if we consider non-deterministic state machines by removing the OCL constraint defining the deterministic condition from the state machine metamodel specification as instructed in [this test case (test_singleInheritance_isSubtypeOf_inconsistent)](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy) we obtain a non-deterministic state machine that does not satisfy the graph constraint, which is represented in object diagram notation as follows:
+Moreover, if we consider non-deterministic state machines by removing the OCL constraint defining the deterministic condition from the state machine metamodel specification as instructed in [this test case (test_singleInheritance_isSubtypeOf_inconsistent)](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_example.groovy) we obtain a non-deterministic state machine that does not satisfy the graph constraint, which is represented in object diagram notation as follows:
 
 <img src="images/counterexample.png" height="250">
 
 The counterexample in generated in the folder `temp/model`, where `temp` is the temporary folder specified in the corresponding *subtyping.properties* file. The counterexample is a model conforming to the virtual metamodel and can be *casted down* to the subtype as explained in the sections below. 
 
-[These test cases](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_event.groovy) demonstrate the usage of the possible combinations of OCL constraints with metamodels for checking structural subtyping, showing that OCL constraints are optional in metamodel specifications.
+[These test cases](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_event.groovy) demonstrate the usage of the possible combinations of OCL constraints with metamodels for checking structural subtyping, showing that OCL constraints are optional in metamodel specifications.
 
 
 
@@ -208,13 +208,13 @@ The counterexample in generated in the folder `temp/model`, where `temp` is the 
 
 In this section, we are going to show how to reuse a model management operation - in this case, a model-to-text transformation with ATL - for a modified version of the state machine metamodel. In this scenario, we discuss how to use the tool to reuse an ATL model transformation defined for a metamodel `version 1` for models of a metamodel `version 2` when the metamodel `version 1` is not exactly a supertype of the metamodel `version 2`. In addition, we illustrate that the ATL model transformation can be applied even if a model is only **partially typed** by the metamodel involved in the ATL transformation.
 
-The steps involved in this scenario relating to our tool are fully automated in the test case [test_evolution_scenario](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_evolution.groovy). The steps that require interaction with ATL need to be carried out manually though.
+The steps involved in this scenario relating to our tool are fully automated in the test case [test_evolution_scenario](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_evolution.groovy). The steps that require interaction with ATL need to be carried out manually though.
 
-[Initial state machine metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/models/smObservation.emf) (**version 1**):
+[Initial state machine metamodel](./subtyping.sm.atl/models/smObservation.emf) (**version 1**):
 
 <img src="images/mm_SmObservation.png" height="300">
 
-We have developed an [ATL transformation](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/trafo/sm.atl) that serializes a state machine conforming to the previous metamodel into the [format proposed by Martin Fowler](http://www.informit.com/articles/article.aspx?p=1592379&seqNum=3):
+We have developed an [ATL transformation](./subtyping.sm.atl/trafo/sm.atl) that serializes a state machine conforming to the previous metamodel into the [format proposed by Martin Fowler](http://www.informit.com/articles/article.aspx?p=1592379&seqNum=3):
 
 	query SM2Text = sm!StateMachine.allInstances()
 			->asSequence()
@@ -254,7 +254,7 @@ into
 	state b
 	end
 
-In an update of our DSL for state machines, a concept *Event* is added as an explicit class and the concept *Observation* is removed, producing a [new metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/extended/smEvent.emf) (**version 2**):
+In an update of our DSL for state machines, a concept *Event* is added as an explicit class and the concept *Observation* is removed, producing a [new metamodel](./subtyping.sm.atl/extended/smEvent.emf) (**version 2**):
 
 <img src="images/mm_SmEvent.png" height="300">
 
@@ -272,7 +272,7 @@ The questions that we address next are:
 * Can we reuse the model management operation for compiling state machines that conform to `version 2` of the metamodel (as the one depicted above)? 
 * If so, how can we do it?
 
-Our subtyping operation assists us in determining that `version 2` of the metamodel together with the OCL constraint is a refinement of `version 1` as shown [in this test case](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_evolution.groovy), which is not due to the removal of the **Observation** concept. By looking at the generated binding file and at completement of the supertype metamodel (shown below), the modeller has information to find out the source of the problem. 
+Our subtyping operation assists us in determining that `version 2` of the metamodel together with the OCL constraint is a refinement of `version 1` as shown [in this test case](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_evolution.groovy), which is not due to the removal of the **Observation** concept. By looking at the generated binding file and at completement of the supertype metamodel (shown below), the modeller has information to find out the source of the problem. 
 
 <img src="images/mm_SupertypeComp.png" height="175">
 
@@ -280,14 +280,14 @@ To see if there exists a potential valid refinement for reusing the operation, t
 * **manually** by inspecting the software artifacts generated by our tool and by inspecting the ATL transformation, which seems reasonable for an example of this size; or
 * **automatically** by using tools like [anATLyzer](http://sanchezcuadrado.es/projects/anatlyzer/) that perform static analysis of ATL transformations.
 
-Our tool provides a facility for prunning a metamodel given the features of interest. The computed [effective metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/resources/sle17/sm/evolution/smObservation_prunned.emf) is as follows:
+Our tool provides a facility for prunning a metamodel given the features of interest. The computed [effective metamodel](./subtyping.tests/src/test/resources/sle17/sm/evolution/smObservation_prunned.emf) is as follows:
 
 <img src="images/mm_SmObservationPrunned.png" height="250">
 
 The subtyping operation is used again to check whether the effective metamodel is a valid supertype for our metamodel (`version 2`), which is correct.
 
 The subtyping operation also synthesizes: 
-* the [extension metamodel](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl/extended/binding0_reuse_mm.emf), depicted in class diagram notation as follows
+* the [extension metamodel](./subtyping.sm.atl/extended/binding0_reuse_mm.emf), depicted in class diagram notation as follows
 
 <img src="images/mm_SmExtension.png" height="375">
 
@@ -295,7 +295,7 @@ The subtyping operation also synthesizes:
 
 <img src="images/mm_SubtypeComp.png" height="175">
 
-The extension metamodel, shown above, can be used to rewrite the signature of the model management operation. In addition, as the subtyping operation had to apply some automatic renamings in order to avoid name clashes, we have to adapt the original model that conforms to **version 2** to the extension metamodel as shown in the test case [test_evolution_scenario](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_evolution.groovy). This operation retypes the objects in the original model according to the renamings inferred by the subtyping operation: 
+The extension metamodel, shown above, can be used to rewrite the signature of the model management operation. In addition, as the subtyping operation had to apply some automatic renamings in order to avoid name clashes, we have to adapt the original model that conforms to **version 2** to the extension metamodel as shown in the test case [test_evolution_scenario](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_evolution.groovy). This operation retypes the objects in the original model according to the renamings inferred by the subtyping operation: 
 
 <img src="images/model_renamed.png" height="250">
 
@@ -310,7 +310,7 @@ In case the renamings applied to the subtype metamodel in the extension model ma
 
 In this example, we are considering the reuse of an ATL transformation used in the paper for simulating deterministic state machines stepwise by using an ATL transformation that applies a function graph to a node. The difference with the evolution example is that the simulation example generates new elements in the transformation, which are automatically re-typed in our approach, illustrating how **dynamic typing** is supported.
 
-The steps in the scenario described below have been implemented in the test case [test_simulation_scenario](https://github.com/mde-subtyping/web/blob/master/subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_simulation.groovy). The resources used in the scenario are reachable from the implementation of the test case.
+The steps in the scenario described below have been implemented in the test case [test_simulation_scenario](./subtyping.tests/src/test/groovy/metamodel/sm/test_sle17_sm_simulation.groovy). The resources used in the scenario are reachable from the implementation of the test case.
 
 * The graph metamodel that has been considered is
 
@@ -327,7 +327,7 @@ The steps in the scenario described below have been implemented in the test case
 		))
 	
 
-* The [ATL transformation](https://github.com/mde-subtyping/web/blob/master/subtyping.sm.atl.simulation/trafo/simulation_sm.atl), shown below, applies a marking to the nodes of the graph by following the order imposed by the edges of the function graph. The execution of the ATL transformation simulates the application of the graph function to a node, when there is a successor node that has not been marked in the model.
+* The [ATL transformation](./subtyping.sm.atl.simulation/trafo/simulation_sm.atl), shown below, applies a marking to the nodes of the graph by following the order imposed by the edges of the function graph. The execution of the ATL transformation simulates the application of the graph function to a node, when there is a successor node that has not been marked in the model.
 
 
 		module simulation;

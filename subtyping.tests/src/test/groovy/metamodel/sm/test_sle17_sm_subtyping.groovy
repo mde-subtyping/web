@@ -1,5 +1,6 @@
 package metamodel.sm
 
+import fma.integration.use.SolverProperties
 import fma.metamodel.subtyping.utils.ModelTypeUtils
 import maude4j.MaudeDaemon
 import spock.lang.Specification
@@ -11,15 +12,10 @@ class test_sle17_sm_subtyping extends Specification {
 	
 	private Boolean eval(String sourceMetamodelPath, String sourceRootClassName, String targetMetamodelPath, String targetRootClassName) {
 		
-		def String os = "OS_MACOSX";
-		def String maudePath = "/Users/ab373/Documents/ArturData/SOFTWARE/maude/maude_2.6/maude.intelDarwin";
-		def String fullMaudePath = "/Users/ab373/Documents/ArturData/SOFTWARE/maude/maude2_6/full-maude26.maude";
-		def String logPath = "./";
-		def String logName = "maude.log";
-//		def fmaCodePath = TestProperties.fmaCodePath
-		def fmaCodePath = '/Users/ab373/Documents/ArturData/WORK/git/fma.maude/fma.maude/maude/fase18/fmaOcl-unit-refSem-proc-typeInf/000_LOAD_SUBTYPING.maude'
+		def propFilePath = "src/test/resources/sle17/sm/subtyping/subtyping.properties"
+		SolverProperties.loadPropertiesFile(propFilePath)
 		
-		def ModelTypeUtils tool = new ModelTypeUtils(os, maudePath, fullMaudePath, logPath, logName, fmaCodePath)
+		def ModelTypeUtils tool = new ModelTypeUtils()
 		def result = tool.isSubtypeOf(sourceMetamodelPath,sourceRootClassName,targetMetamodelPath,targetRootClassName)
 
 		return result

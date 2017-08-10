@@ -10,6 +10,8 @@ context Transition
 inv eventTransition: 
 name <> '' implies isCompletion=false
 
+-- the two constraints below are added to help the solver generate
+-- witness models that respect containment references
 context State
 inv stateContainment:
 StateMachine.allInstances()->exists(sm | sm.nodes->includes(self))
