@@ -1,4 +1,4 @@
-# Software Artifact Submission for SLE'17
+# Structural Model Subtyping with OCL Constraints
 
 This document describes how to install and use the tool supporting the results of the paper **Structural Model Subtyping with OCL Constraints** by **Artur Boronat (University of Leicester, UK)**, accepted for publication at [SLE@SPLASH'17](http://conf.researchr.org/track/sle-2017/sle-2017-papers).
 
