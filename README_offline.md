@@ -327,7 +327,7 @@ The steps in the scenario described below have been implemented in the test case
 		))
 	
 
-* The [ATL transformation](./subtyping.sm.atl.simulation/trafo/simulation_sm.atl), shown below, applies a marking to the nodes of the graph by following the order imposed by the edges of the function graph. The execution of the ATL transformation simulates the application of the graph function to a node, when there is a successor node that has not been marked in the model.
+* The [ATL transformation](./subtyping.sm.atl.simulation/trafo/simulation.atl), shown below, applies a marking to the nodes of the graph by following the order imposed by the edges of the function graph. The execution of the ATL transformation simulates the application of the graph function to a node, when there is a successor node that has not been marked in the model.
 
 
 		module simulation;
@@ -335,14 +335,14 @@ The steps in the scenario described below have been implemented in the test case
 		
 		rule simulate {
 			from 
-				n1 : graph!State ( n1.mark.oclIsUndefined() and graph!Transition.allInstances()->exists( e | e.target=n1 and not e.source.mark.oclIsUndefined()) ) 
+				n1 : graph!Node ( n1.mark.oclIsUndefined() and graph!Edge.allInstances()->exists( e | e.target=n1 and not e.source.mark.oclIsUndefined()) ) 
 			to
-				n2 : graph!State (
+				n2 : graph!Node (
 					mark <- m		
 				),
-				m : graph!Observation (
+				m : graph!Mark (
 					graph <- n1.graph,
-					time <- graph!Transition.allInstances()->select( e | e.target=n1 and not e.source.mark.oclIsUndefined())->asSequence()->first().source.mark.time + 1
+					time <- graph!Edge.allInstances()->select( e | e.target=n1 and not e.source.mark.oclIsUndefined())->asSequence()->first().source.mark.time + 1
 				)	
 		}
 
